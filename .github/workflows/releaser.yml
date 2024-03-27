@@ -20,15 +20,16 @@ jobs:
 
     - name: Create release note
       run: |
-        count=0
+        count = 0
         IFS=$'\n'
         while read line; do
+          echo ${line}
           if [ ${count} = 0 ] && [[ ${line} =~ "更新履歴" ]]; then
+            echo count=1
             count=1
           elif [ ${count} = 1 ] && [[ ${line} =~ "*v" ]]; then
+            echo count=2
             count=2
-          elif [ ${count} = 2 ] && [[ ${line} =~ "*v" ]]; then
-            break
           elif [ ${count} = 2 ]; then
             echo ${line} >> ReleaseNote.txt
           fi
